@@ -7,55 +7,61 @@
 #include "libHh/Geometry.h"
 #include "libHh/Map.h"
 
-namespace hh {
+namespace hh
+{
 
-class SCGeomorph : noncopyable {
- public:
-  void clear();
-  void read(std::istream& is);
-  void update(float alpha, Array<Vector>& corner_nors);
-  SimplicialComplex& getK() { return K; }
+	class SCGeomorph : noncopyable
+	{
+	public:
+		void clear();
+		void read(std::istream& is);
+		void update(float alpha, Array<Vector>& corner_nors);
+		SimplicialComplex& getK()
+		{
+			return K;
+		}
 
- private:
-  void vertSmoothNormal(Simplex vs, Simplex corner_fct, Vector& avg_norm, bool skip_degenerate = false);
-  int degenerate(Simplex verts[3]);
+	private:
+		void vertSmoothNormal(Simplex vs, Simplex corner_fct, Vector& avg_norm, bool skip_degenerate = false);
+		int degenerate(Simplex verts[3]);
 
-  SimplicialComplex K;
+		SimplicialComplex K;
 
-  // positions
-  Array<Point> vold;
-  Array<Point> vnew;
+		// positions
+		Array<Point> vold;
+		Array<Point> vnew;
 
-  // areas
-  Map<Simplex, float> anew;
-  Map<Simplex, float> aold;
+		// areas
+		Map<Simplex, float> anew;
+		Map<Simplex, float> aold;
 
-  // materials
-  Map<Simplex, int> mold;
+		// materials
+		Map<Simplex, int> mold;
 
-  // normals
-  Array<Vector> nold;
-  Array<Vector> nnew;
+		// normals
+		Array<Vector> nold;
+		Array<Vector> nnew;
 
-  Array<Vector> fct_pnor;
-  Array<int> s_norgroup;
-};
+		Array<Vector> fct_pnor;
+		Array<int> s_norgroup;
+	};
 
-inline void SCGeomorph::clear() {
-  K.clear();
-  vold.clear();
-  vnew.clear();
+	inline void SCGeomorph::clear()
+	{
+		K.clear();
+		vold.clear();
+		vnew.clear();
 
-  nnew.clear();
-  nold.clear();
+		nnew.clear();
+		nold.clear();
 
-  fct_pnor.clear();
-  s_norgroup.clear();
+		fct_pnor.clear();
+		s_norgroup.clear();
 
-  anew.clear();
-  aold.clear();
-  mold.clear();
-}
+		anew.clear();
+		aold.clear();
+		mold.clear();
+	}
 
 }  // namespace hh
 
