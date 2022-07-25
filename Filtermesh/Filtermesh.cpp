@@ -5409,7 +5409,9 @@ int main(int argc, const char** argv)
 	{
 	}
 	else if (
-		arg0 != "-froma3d" && arg0 != "-rawfroma3d" && arg0 != "-creategrid" && arg0 != "-fromgrid" &&
+		arg0 != "-fromObj" &&
+		arg0 != "-froma3d" && arg0 != "-rawfroma3d" && 
+		arg0 != "-creategrid" && arg0 != "-fromgrid" &&
 		arg0 != "-frompointgrid" && arg0 != "-createobject")
 	{
 		string filename = "-";
