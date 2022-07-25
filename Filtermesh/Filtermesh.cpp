@@ -5056,19 +5056,16 @@ namespace
 			}
 			else if (strncmp(line, "f ", 2) == 0)
 			{
-//				int n = 2, l = int(strlen(line));  // jump over "f "
+				int n = 2, l = int(strlen(line));  // jump over "f "
 				Vector fn(0.f, 0.f, 0.f);
 				Array<Vertex> va;
 				Polygon pp;
 				bool have_nors = true;
-//				while (n < l - 1)
-//				{
-////					int i, j, k, n1;
-////					assertx(sscanf(line + n, " %d/%d/%d %n", &i, &j, &k, &n1) == 4);
-////					n += n1;
-					int i, j, k;
-					assertx(sscanf(line + 2, "%d %d %d", &i, &j, &k) == 3);
-//					n += n1;
+				while (n < l - 1)
+				{
+					int i, j, k, n1;
+					assertx(sscanf(line + n, " %d/%d/%d %n", &i, &j, &k, &n1) == 4);
+					n += n1;
 					if (k - 1 < nor.num())
 						fn += nor[k - 1];  // -1: arrays are 0-based
 					else
@@ -5076,26 +5073,24 @@ namespace
 					Vertex vv = mesh.id_vertex(i);
 					va.push(vv);
 					pp.push(mesh.point(vv));
-//				}
+				}
 				// maybe flip face winding to match the vertex normals orientation
 				if (have_nors && dot(fn, pp.get_normal()) < 0) reverse(va);
 				if (mesh.legal_create_face(va))
 				{
 					Face f = mesh.create_face(va);
 					group.add(f);
-//					n = 2;
-//					while (n < l - 1)
-//					{  // update corner attributes, if supplied
-////						int i, j, k, n1;
-////						assertx(sscanf(line + n, "  %d/%d/%d %n", &i, &j, &k, &n1) == 4);
-////						n += n1;
-						//int i, j, k;
-						//assertx(sscanf(line + 2, "%d %d %d", &i, &j, &k) == 3);
+					n = 2;
+					while (n < l - 1)
+					{  // update corner attributes, if supplied
+						int i, j, k, n1;
+						assertx(sscanf(line + n, " %d/%d/%d %n", &i, &j, &k, &n1) == 4);
+						n += n1;
 						Corner c = mesh.corner(mesh.id_vertex(i), f);
 						--k, --j;  // arrays are 0-based
 						if (k < nor.num()) mesh.update_string(c, "normal", csform_vec(str, nor[k]));
 						if (j < uv.num()) mesh.update_string(c, "uv", csform_vec(str, uv[j]));
-//					}
+					}
 				}
 				else
 				{
@@ -5414,9 +5409,7 @@ int main(int argc, const char** argv)
 	{
 	}
 	else if (
-		arg0 != "-fromObj" &&
-		arg0 != "-froma3d" && arg0 != "-rawfroma3d" && 
-		arg0 != "-creategrid" && arg0 != "-fromgrid" &&
+		arg0 != "-froma3d" && arg0 != "-rawfroma3d" && arg0 != "-creategrid" && arg0 != "-fromgrid" &&
 		arg0 != "-frompointgrid" && arg0 != "-createobject")
 	{
 		string filename = "-";
